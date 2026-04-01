@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PII Redaction App</title>
+</head>
+<body>
+
+    <h2>PII Redaction & Safe Output</h2>
+
+    <textarea id="inputText" rows="5" cols="50" placeholder="Enter text..."></textarea>
+    <br><br>
+
+    <button onclick="sendData()">Submit</button>
+
+    <h3>Safe Output:</h3>
+    <p id="output"></p>
+
+    <script>
+        async function sendData() {
+            let text = document.getElementById("inputText").value;
+
+            let response = await fetch("http://127.0.0.1:8000/chat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ text: text })
+            });
+
+            let data = await response.json();
+
+            document.getElementById("output").innerText = data.safe_output;
+        }
+    </script>
+
+</body>
+</html>
